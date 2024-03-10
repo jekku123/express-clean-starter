@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { IUserService } from '../interfaces/user.service.interface';
+import { IUserService } from '../interfaces/IUserService';
 
 export class UserController {
   private userService: IUserService;
@@ -17,5 +17,40 @@ export class UserController {
     }
   }
 
-  // ...
+  async onGetUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await this.userService.getUser(req.params.id);
+      res.status(200).json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async onCreateUser(req: Request, res: Response, next: NextFunction) {
+    const { email, password } = req.body;
+    try {
+      const user = await this.userService.createUser(email, password);
+      res.status(201).json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async onUpdateUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await this.userService.updateUser(req.params.id, req.body);
+      res.status(200).json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async onDeleteUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await this.userService.deleteUser(req.params.id);
+      res.status(200).json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

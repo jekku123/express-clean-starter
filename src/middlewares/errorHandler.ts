@@ -1,22 +1,23 @@
 import { NextFunction, Request, Response } from 'express';
-import { CustomError } from '../lib/errors';
+import AppError from '../lib/errors';
 import { logger } from '../lib/logger';
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  if (err instanceof CustomError) {
+  if (err instanceof AppError) {
     logger.error(err);
 
     return res.status(err.statusCode).send({
-      statusCode: err.statusCode,
       success: false,
-      message: err.message,
-      errors: err.serializeErrors(),
+      errors: {
+        message: err.message,
+        stack: process.env.NODE_ENV === 'production' ? undefined : err.stack,
+        context: err.context,
+      },
     });
   }
 
   logger.error(err);
 
   return res.status(500).send({
-    statusCode: 500,
     success: false,
     message: 'Internal Server Error',
   });
