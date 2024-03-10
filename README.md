@@ -1,4 +1,4 @@
-# Express Starterkit following Clean Architecture
+# Express Starterkit
 
 This is a starterkit for an Express application following the Clean Architecture principles.
 
