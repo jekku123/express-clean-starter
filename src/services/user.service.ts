@@ -20,7 +20,7 @@ export class UserService implements IUserService {
     return user;
   }
 
-  async getUser(id: string): Promise<User | undefined> {
+  async getUser(id: number): Promise<User | undefined> {
     const user = await this.userRepository.findOneById(id);
 
     if (!user) {
@@ -50,7 +50,7 @@ export class UserService implements IUserService {
     return newUser;
   }
 
-  async updateUser(id: string, user: User): Promise<User> {
+  async updateUser(id: number, user: User): Promise<User> {
     const userExists = await this.userRepository.findOneById(id);
 
     if (!userExists) {
@@ -66,7 +66,7 @@ export class UserService implements IUserService {
     return updatedUser;
   }
 
-  async deleteUser(id: string): Promise<User> {
+  async deleteUser(id: number): Promise<User> {
     const deletedUser = await this.userRepository.delete(id);
 
     if (!deletedUser) {

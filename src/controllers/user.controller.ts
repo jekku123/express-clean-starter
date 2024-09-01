@@ -18,8 +18,10 @@ export class UserController {
   }
 
   async onGetUser(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+
     try {
-      const user = await this.userService.getUser(req.params.id);
+      const user = await this.userService.getUser(+id);
       res.status(200).json(user);
     } catch (e) {
       next(e);
@@ -37,8 +39,9 @@ export class UserController {
   }
 
   async onUpdateUser(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
     try {
-      const user = await this.userService.updateUser(req.params.id, req.body);
+      const user = await this.userService.updateUser(+id, req.body);
       res.status(200).json(user);
     } catch (e) {
       next(e);
@@ -46,8 +49,9 @@ export class UserController {
   }
 
   async onDeleteUser(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
     try {
-      const user = await this.userService.deleteUser(req.params.id);
+      const user = await this.userService.deleteUser(+id);
       res.status(200).json(user);
     } catch (e) {
       next(e);
